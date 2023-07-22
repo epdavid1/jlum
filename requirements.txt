@@ -2,3 +2,4 @@ beautifulsoup4==4.11.1
 pandas==1.5.3
 Requests==2.31.0
 streamlit==1.21.0
+lxml==4.9.1
