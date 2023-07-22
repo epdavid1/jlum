@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import math
 import streamlit as st
 from concurrent.futures import ThreadPoolExecutor
+import lxml
 
 headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"}
 session = requests.Session()
