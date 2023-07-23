@@ -56,7 +56,6 @@ def scrape(no_pages, search):
             test.append(temp)
 
     df = pd.DataFrame(test, columns=['title', 'salary', 'company', 'location', 'link'])
-    df = pd.DataFrame(test, columns=['title', 'salary', 'company', 'location', 'link'])
     df = df[df['salary'] != 'unknown'].reset_index(drop=True)
     df['salary_low'] = df['salary'].str.split(' ', expand=True).drop(0, axis=1)[1]
     df['salary_high'] = df['salary'].str.split(' ', expand=True).drop(0, axis=1)[3]
@@ -64,7 +63,18 @@ def scrape(no_pages, search):
     df['salary_high'] = df['salary_high'].str.replace(',','').astype('float')
     df.loc[df[df['salary_high'].isna()].index, 'salary_high'] = df[df['salary_high'].isna()]['salary_low']
     df = df.drop('salary', axis=1)
-    df = df[['title', 'salary_low', 'salary_high', 'company', 'location', 'link']]
+
+    with ThreadPoolExecutor(max_workers=30) as executor:
+        links = list(executor.map(make_request, df['link'].to_list()))
+
+    desc = []  
+    for i in range(len(links)):
+        soup = BeautifulSoup(links[i].content, 'lxml')
+        string = soup.find('span', itemprop='description').get_text(separator='\n')
+        desc.append(string.replace('\n', ' ').replace('\xa0', ' '))
+    df['details'] = pd.DataFrame(desc)
+
+    df = df[['title', 'salary_low', 'salary_high', 'company', 'location', 'details', 'link']]
 
     return df
 
