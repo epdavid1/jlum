@@ -99,7 +99,7 @@ def main():
                     df = scrape(no_pages, search)
                 
         st.dataframe(df)
-        st.write(f'Time elapsed: {round(time.time()-start,2)}')
+        st.caption(f'Time elapsed: {round(time.time()-start,2)}s')
         csv = df.to_csv(index=False)
 
         st.download_button(
