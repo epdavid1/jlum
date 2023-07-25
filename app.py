@@ -5,6 +5,7 @@ import math
 import streamlit as st
 from concurrent.futures import ThreadPoolExecutor
 import lxml
+import time
 
 hide_streamlit_style = """
             <style>
