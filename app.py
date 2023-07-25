@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 import lxml
 
 hide_github_icon = """
-#GithubIcon {
+#MainMenu {
   visibility: hidden;
 }
 """
