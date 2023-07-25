@@ -91,12 +91,14 @@ def main():
     st.title('Joblum Scraper')
     job_name = st.text_input('Enter job title')
     if st.button("Scrape jobs"):
-        #start = time.time()
+        start = time.time()
         search = job_name
-        no_pages, total_jobs = get_jobs(search)
-        df = scrape(no_pages, search)
+        with st.spinner('Scraping...'):                    
+                    no_pages, total_jobs = get_jobs(search)
+                    df = scrape(no_pages, search)
+                
         st.dataframe(df)
-        #st.write(time.time()-start)
+        st.write(f'Time elapsed: {time.time()-start}')
         csv = df.to_csv(index=False)
 
         st.download_button(
